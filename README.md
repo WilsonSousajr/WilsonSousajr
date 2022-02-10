@@ -2,12 +2,9 @@
 
 ### <h3 align='center'><i>&lt;A Front End Developer /&gt;</i> </h3>
 
- | <a href="https://epeixoto.me"><img align="center" src="https://github-readme-stats.vercel.app/api/wakatime?username=MoranggNormal&theme=dracula&v=2" /></a> | <a href="https://epeixoto.me"><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=MoranggNormal&theme=dracula" /></a> |
-
-  
-
+<section>
 <a><img align="center" src="https://github-readme-stats.vercel.app/api?username=WilsonJunior1&show_icons=true&theme=blue-green&hide_border" /></a> | <a><img align="center" src="http://github-readme-streak-stats.herokuapp.com?user=WilsonJunior1&theme=github-dark&date_format=M%20j%5B%2C%20Y%5D" /></a> 
-
+</section>
 
   ________________________________________________________________________________________________________________________
   
