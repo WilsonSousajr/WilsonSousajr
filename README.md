@@ -1,9 +1,11 @@
 # <h1 align="center">💻Hi! i'm Will👋</h1>
 
-### <h3 align='center'>< Front End Developer /> </h3>
+### <h3 align='center'><i>&lt;A Front End Developer /&gt;</i> </h3>
   
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=WilsonJunior1&show_icons=true&theme=blue-green&hide_border)
-[![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=WilsonJunior1&theme=github-dark&date_format=M%20j%5B%2C%20Y%5D)](https://git.io/streak-stats)
+
+
+<img align="center" src="https://github-readme-stats.vercel.app/api?username=WilsonJunior1&show_icons=true&theme=blue-green&hide_border">
+<img align="center" src="http://github-readme-streak-stats.herokuapp.com?user=WilsonJunior1&theme=github-dark&date_format=M%20j%5B%2C%20Y%5D)](https://git.io/streak-stats">
 
 
   ________________________________________________________________________________________________________________________
