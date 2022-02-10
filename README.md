@@ -2,12 +2,13 @@
 
 ### <h3 align='center'><i>&lt;A Front End Developer /&gt;</i> </h3>
 
-<section>
-<a><img align="left" src="https://github-readme-stats.vercel.app/api?username=WilsonJunior1&show_icons=true&theme=blue-green&hide_border" /></a> | <a><img align="right" src="http://github-readme-streak-stats.herokuapp.com?user=WilsonJunior1&theme=github-dark&date_format=M%20j%5B%2C%20Y%5D" /></a> 
-</section>
 
-  ________________________________________________________________________________________________________________________
-  
+
+<br/><br/>
+
+
+| <a><img align="center" src="https://github-readme-stats.vercel.app/api?username=WilsonJunior1&show_icons=true&theme=blue-green&hide_border" /></a> | <a><img align="center" src="http://github-readme-streak-stats.herokuapp.com?user=WilsonJunior1&theme=github-dark&date_format=M%20j%5B%2C%20Y%5D" /></a> |
+| ------------- | ------------- |
 
   <h1 align="center">🚀Skills</h1>
 
@@ -22,6 +23,8 @@
   <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white"/>
 </p>
 
+<h1 align="center">🚀Contact</h1>
+
   <p align="center">
   <a href="https://api.whatsapp.com/send?phone=5561995628227&text=Hello%20World!">
     <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
@@ -34,3 +37,5 @@
   <a href="https://www.linkedin.com/in/wilsonsousaj%C3%BAnior/">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
   </a>&nbsp;
+  
+  
