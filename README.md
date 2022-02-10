@@ -5,7 +5,7 @@
 <br/>
 
 
-| <a><img align="center" src="https://github-readme-stats.vercel.app/api?username=WilsonJunior1&show_icons=true&theme=blue-green&hide_border" /></a> <a><img align="center" src="http://github-readme-streak-stats.herokuapp.com?user=WilsonJunior1&theme=github-dark&date_format=M%20j%5B%2C%20Y%5D" /></a> | <h2 align="center">< About me /></h2> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque accumsan erat luctus, vestibulum velit id, condimentum leo. Etiam elementum dapibus est malesuada vehicula. </p> |
+| <a><img align="center" src="https://github-readme-stats.vercel.app/api?username=WilsonJunior1&show_icons=true&theme=blue-green&hide_border" /></a> &nbsp; <a><img align="center" src="http://github-readme-streak-stats.herokuapp.com?user=WilsonJunior1&theme=github-dark&date_format=M%20j%5B%2C%20Y%5D" /></a> | <h2 align="center">< About me /></h2> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque accumsan erat luctus, vestibulum velit id, condimentum leo. Etiam elementum dapibus est malesuada vehicula. </p> |
 | ------- | -----------|
 
 
