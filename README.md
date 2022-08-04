@@ -1,6 +1,6 @@
 # <h1 align="center">💻Hi! i'm Will👋</h1>
 
-### <h3 align='center'><i>&lt;A Front End Developer /&gt;</i> </h3>
+### <h3 align='center'><i>&lt;A Web Developer /&gt;</i> </h3>
 
 <br/>
 
