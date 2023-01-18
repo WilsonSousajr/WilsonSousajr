@@ -8,4 +8,4 @@ Freelancer.
 
 Passionate about web development technologies and innovations in Ui / UX Design
 
-[![Wilson Sousa Activity Graph](https://github-readme-activity-graph.cyclic.app/graph?username=WilsonSousajr&theme=react)](https://github.com/WilsonSousajr/github-readme-activity-graph)
+[![Wilson Sousa Activity Graph](https://github-readme-activity-graph.cyclic.app/graph?username=WilsonSousajr&theme=github-compact)](https://github.com/WilsonSousajr/github-readme-activity-graph)
