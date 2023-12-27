@@ -1,6 +1,6 @@
 # Wilson Sousa
 
-Freelancer.
+Fullstack developer.
 
 [![Twitter Badge](https://img.shields.io/badge/-@WilsonSousa_-00875f?style=flat-square&labelColor=00875f&logo=twitter&logoColor=white&link=https://twitter.com/WilsonSousa_)](https://twitter.com/WilsonSousa_) 
 [![Linkedin Badge](https://img.shields.io/badge/-WilsonSousajr-00875f?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/wilsonsousajúnior/)](https://www.linkedin.com/in/wilsonsousajúnior/) 
