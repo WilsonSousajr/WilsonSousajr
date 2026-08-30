@@ -8,4 +8,4 @@ FullStack developer.
 
 Passionate about web development technologies..
 
-[![WilsonSousajr's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=WilsonSousajr&theme=vue)](https://github.com/ashutosh00710/github-readme-activity-graph)
+
