@@ -18,7 +18,7 @@ function pill(text: string, x: number, y: number, h: number, size: number, padX:
 }
 
 export function renderProfile(t: Theme): string {
-  const W = 840, H = 190;
+  const W = 832, H = 190;
   const parts: string[] = [];
   parts.push(pill(PROFILE.pill, PAD, PAD, 24, 11, 10, t).svg);
   parts.push(textPath(PROFILE.name, { x: PAD, y: 88, size: 30, weight: 700, fill: t.primary }).svg);
@@ -51,7 +51,7 @@ export function renderLink(l: LinkCard, t: Theme): string {
 }
 
 export function renderStats(s: Stats, t: Theme): string {
-  const W = 840, H = 150;
+  const W = 832, H = 150;
   const col = (W - PAD * 2) / 3;
   const figures = [s.contributions, s.longestStreak, s.repos].map((n) => n.toLocaleString('en-US'));
   const parts = [

@@ -8,7 +8,7 @@ for (const theme of THEMES) {
 
   test(`${theme.name}: standalone svg with the right viewBox`, () => {
     assert.ok(svg.startsWith('<svg'));
-    assert.ok(svg.includes('viewBox="0 0 272 150"'));
+    assert.ok(svg.includes('viewBox="0 0 280 150"'), 'card width + 2×4px inset');
   });
 
   test(`${theme.name}: reduced motion turns animation off`, () => {

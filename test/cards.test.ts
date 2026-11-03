@@ -19,7 +19,7 @@ for (const t of THEMES) {
 
   test(`${t.name}: blog link card size, title and stagger`, () => {
     const svg = renderLink(LINKS[1], t);
-    assert.ok(svg.includes('viewBox="0 0 272 150"'));
+    assert.ok(svg.includes('viewBox="0 0 280 150"'));
     assert.ok(svg.match(/<title>(.*?)<\/title>/)![1].includes('Blog'));
     assert.ok(svg.includes('animation-delay: 240ms'));
   });
@@ -42,4 +42,16 @@ test('writeStatic writes 4 cards × 2 themes with the agreed names', () => {
     'link-website-dark.svg', 'link-website-light.svg',
     'profile-dark.svg', 'profile-light.svg',
   ]);
+});
+
+test('row alignment: three link canvases add up to exactly one wide canvas', () => {
+  const vb = (svg: string) => Number(svg.match(/viewBox="0 0 (\d+) /)![1]);
+  const t = THEMES[0];
+  assert.equal(vb(renderLink(LINKS[0], t)) * 3, vb(renderProfile(t)));
+});
+
+test('every card is inset 4px inside its canvas, so neighbours sit 8px apart', () => {
+  for (const svg of [renderProfile(THEMES[0]), renderLink(LINKS[0], THEMES[0])]) {
+    assert.ok(svg.includes('<g transform="translate(4 0)">'), 'inset group');
+  }
 });
