@@ -28,7 +28,7 @@ const problems: string[] = [];
 for (const scheme of ['dark', 'light'] as const) {
   const file = `${out}page-${scheme}.html`;
   writeFileSync(file, page(scheme));
-  for (const width of [1280, 390]) {
+  for (const width of [1280, 700, 390]) {
     const p = await browser.newPage({ viewport: { width, height: 900 }, colorScheme: scheme, deviceScaleFactor: 2 });
     await p.goto(pathToFileURL(file).href, { waitUntil: 'networkidle' });
     await p.waitForTimeout(2000);
@@ -47,7 +47,7 @@ await browser.close();
 const pictures = (html.match(/<picture>/g) ?? []).length;
 const sources = (html.match(/<source /g) ?? []).length;
 console.log(`sanitized HTML keeps ${pictures} <picture> and ${sources} <source>`);
-if (problems.length || pictures !== 5 || sources !== 15) {
+if (problems.length || pictures !== 5 || sources !== 25) {
   console.error(problems.join('\n') || 'picture/source tags were stripped');
   process.exitCode = 1;
 }

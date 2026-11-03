@@ -5,12 +5,13 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderProfile, renderLink, renderStats, type Variant } from './cards.ts';
+import { renderProfile, renderLink, renderStats, VARIANTS, type Variant } from './cards.ts';
 import { fetchStats, type Stats } from './stats.ts';
 import { LINKS } from './data.ts';
 import { THEMES } from './theme.ts';
 
-const VARIANTS: Variant[] = ['desktop', 'mobile'];
+/** desktop → `<name>-<theme>.svg`, others → `<name>-<variant>-<theme>.svg`. */
+const suffix = (v: Variant, theme: string) => (v === 'desktop' ? theme : `${v}-${theme}`);
 
 export const ASSETS = fileURLToPath(new URL('../assets', import.meta.url));
 
@@ -27,7 +28,7 @@ export function writeStatic(outDir: string): string[] {
   const files: [string, string][] = [];
   for (const t of THEMES) {
     for (const v of VARIANTS) {
-      const sfx = v === 'mobile' ? `mobile-${t.name}` : t.name;
+      const sfx = suffix(v, t.name);
       files.push([`profile-${sfx}.svg`, renderProfile(t, v)]);
       for (const l of LINKS) files.push([`link-${l.id}-${sfx}.svg`, renderLink(l, t, v)]);
     }
@@ -38,7 +39,7 @@ export function writeStatic(outDir: string): string[] {
 /** Renders both themes before writing, so both files change together or not at all. */
 export function writeStats(outDir: string, s: Stats): string[] {
   const files = THEMES.flatMap((t) =>
-    VARIANTS.map((v): [string, string] => [`stats-${v === 'mobile' ? `mobile-${t.name}` : t.name}.svg`, renderStats(s, t, v)]),
+    VARIANTS.map((v): [string, string] => [`stats-${suffix(v, t.name)}.svg`, renderStats(s, t, v)]),
   );
   return write(outDir, files);
 }
