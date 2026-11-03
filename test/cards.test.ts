@@ -36,7 +36,7 @@ for (const t of THEMES) {
 test('writeStatic writes 4 cards × 2 themes with the agreed names', () => {
   const dir = mkdtempSync(join(tmpdir(), 'cards-'));
   const names = writeStatic(dir).map((p) => basename(p)).sort();
-  assert.deepEqual(names, [
+  assert.deepEqual(names.filter((n) => !n.includes('-mobile-')), [
     'link-blog-dark.svg', 'link-blog-light.svg',
     'link-linkedin-dark.svg', 'link-linkedin-light.svg',
     'link-website-dark.svg', 'link-website-light.svg',

@@ -47,7 +47,7 @@ await browser.close();
 const pictures = (html.match(/<picture>/g) ?? []).length;
 const sources = (html.match(/<source /g) ?? []).length;
 console.log(`sanitized HTML keeps ${pictures} <picture> and ${sources} <source>`);
-if (problems.length || pictures !== 5 || sources !== 5) {
+if (problems.length || pictures !== 5 || sources !== 15) {
   console.error(problems.join('\n') || 'picture/source tags were stripped');
   process.exitCode = 1;
 }

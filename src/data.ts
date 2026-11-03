@@ -25,6 +25,8 @@ export const LINKS: LinkCard[] = [
 export const STATS_META = {
   label: 'GitHub activity · last 12 months',
   captions: ['contributions', 'day longest streak', 'repositories contributed to'] as [string, string, string],
+  /** Phone stat card: a third of a ~342px column. */
+  mobileCaptions: ['contributions', 'day streak', 'repos'] as [string, string, string],
   href: 'https://github.com/WilsonSousajr',
   delayMs: 480,
 };
