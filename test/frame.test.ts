@@ -1,14 +1,19 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { frame } from '../src/frame.ts';
+import { frame, right, at } from '../src/frame.ts';
 import { THEMES } from '../src/theme.ts';
 
 for (const theme of THEMES) {
-  const svg = frame({ width: 272, height: 150, theme, delayMs: 240, title: 'A & B', body: '' });
+  const svg = frame({ height: 106, theme, delayMs: 240, title: 'A & B', body: '' });
 
-  test(`${theme.name}: standalone svg with the right viewBox`, () => {
+  test(`${theme.name}: fluid root — fills its <img> width at a fixed pixel height, no viewBox`, () => {
     assert.ok(svg.startsWith('<svg'));
-    assert.ok(svg.includes('viewBox="0 0 280 150"'), 'card width + 2×4px inset');
+    assert.ok(svg.includes('width="100%" height="106"'));
+    assert.ok(!svg.includes('viewBox'), 'a viewBox would scale text with the column');
+  });
+
+  test(`${theme.name}: card is inset 4px each side via CSS calc`, () => {
+    assert.ok(svg.includes('calc(100% - 9px)'));
   });
 
   test(`${theme.name}: reduced motion turns animation off`, () => {
@@ -36,3 +41,8 @@ for (const theme of THEMES) {
     assert.ok(svg.includes('<title>A &amp; B</title>'));
   });
 }
+
+test('right() anchors markup to the right edge; at() to a % of the width', () => {
+  assert.equal(right('<g/>'), '<svg x="100%" overflow="visible"><g/></svg>');
+  assert.equal(at(33.333, '<g/>'), '<svg x="33.333%" overflow="visible"><g/></svg>');
+});

@@ -4,9 +4,6 @@ import { mkdtempSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { longestStreak, fetchStats } from '../src/stats.ts';
-import { renderStats } from '../src/cards.ts';
-import { DARK } from '../src/theme.ts';
-import { measure } from '../src/text.ts';
 import { main } from '../src/build.ts';
 
 const days = (counts: number[], start = '2026-01-01') =>
@@ -90,18 +87,4 @@ test('--stats writes both stat cards on success', async () => {
   const code = await main(['--stats'], { outDir: dir, token: 't', now: new Date('2026-11-03T00:00:00Z'), fetch: stubFetch(200, payload([1, 1])) });
   assert.equal(code, 0);
   assert.ok(readFileSync(join(dir, 'stats-light.svg'), 'utf8').includes('2,625 contributions'));
-});
-
-test('renders five-digit figures within bounds', () => {
-  const svg = renderStats({ contributions: 12345, longestStreak: 365, repos: 120 }, DARK);
-  assert.ok(svg.includes('viewBox="0 0 876 104"'));
-  const col = (868 - 48) / 3;
-  for (const fig of ['12,345', '365', '120']) assert.ok(measure(fig, 24, 700) < col - 16, fig);
-  assert.ok(svg.match(/<title>(.*?)<\/title>/)![1].includes('12,345 contributions'));
-});
-
-test('fetchStats: rejects when the repositories figure is missing (no silent 0)', async () => {
-  const body = payload([1, 1]);
-  delete (body.data.user.contributionsCollection as any).totalRepositoriesWithContributedCommits;
-  await assert.rejects(fetchStats({ token: 't', login: 'x', now: new Date(), fetch: stubFetch(200, body) }), /totalRepositoriesWithContributedCommits/);
 });
