@@ -1,7 +1,8 @@
 // Card layouts. Sizes and type scale mirror wstech.tech's ProfileCard / NavCard.
 import { frame } from './frame.ts';
 import { textPath, measure } from './text.ts';
-import { PROFILE, type LinkCard } from './data.ts';
+import { PROFILE, STATS_META, type LinkCard } from './data.ts';
+import type { Stats } from './stats.ts';
 import type { Theme } from './theme.ts';
 
 const PAD = 24;
@@ -47,4 +48,22 @@ export function renderLink(l: LinkCard, t: Theme): string {
     textPath(l.sub, { x: P, y: H - P - 4, size: 13, weight: 400, fill: t.secondary }).svg,
   ].join('');
   return frame({ width: W, height: H, theme: t, delayMs: l.delayMs, title: `${l.label}: ${l.title} (${l.sub})`, body });
+}
+
+export function renderStats(s: Stats, t: Theme): string {
+  const W = 840, H = 150;
+  const col = (W - PAD * 2) / 3;
+  const figures = [s.contributions, s.longestStreak, s.repos].map((n) => n.toLocaleString('en-US'));
+  const parts = [
+    textPath(STATS_META.label.toUpperCase(), { x: PAD, y: PAD + 10, size: 10, weight: 600, fill: t.muted, letterSpacing: 0.15 }).svg,
+  ];
+  figures.forEach((fig, i) => {
+    const x = PAD + i * col;
+    parts.push(textPath(fig, { x, y: 92, size: 28, weight: 700, fill: t.primary }).svg);
+    parts.push(textPath(STATS_META.captions[i], { x, y: 118, size: 12, weight: 400, fill: t.secondary }).svg);
+  });
+  const title = `GitHub activity over the last 12 months: ${figures
+    .map((f, i) => `${f} ${STATS_META.captions[i]}`)
+    .join(', ')}`;
+  return frame({ width: W, height: H, theme: t, delayMs: STATS_META.delayMs, title, body: parts.join('') });
 }
