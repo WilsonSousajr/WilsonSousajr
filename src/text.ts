@@ -58,8 +58,46 @@ export interface TextOptions {
 export function textPath(text: string, o: TextOptions): { svg: string; width: number } {
   const { glyphs, offsets, width } = layout(text, o.size, o.weight, o.letterSpacing);
   const x0 = o.anchor === 'end' ? o.x - width : o.x;
-  const d = glyphs
-    .map((g, i) => g.getPath(x0 + offsets[i], o.y, o.size).toPathData(2))
-    .join('');
-  return { svg: `<path d="${d}" fill="${o.fill}"/>`, width };
+  const commands = glyphs.flatMap((g, i) => g.getPath(x0 + offsets[i], o.y, o.size).commands);
+  return { svg: `<path d="${compact(commands)}" fill="${o.fill}"/>`, width };
+}
+
+const r1 = (n: number) => Math.round(n * 10) / 10;
+/** Join numbers with the fewest separators: "-" and a leading "." already separate. */
+function nums(values: number[]): string {
+  let out = '';
+  for (const v of values) {
+    let s = String(v);
+    if (s.startsWith('0.')) s = s.slice(1);
+    else if (s.startsWith('-0.')) s = '-' + s.slice(2);
+    const needsSep = out !== '' && !s.startsWith('-') && !(s.startsWith('.') && /\.\d*$/.test(out));
+    out += (needsSep ? ' ' : '') + s;
+  }
+  return out;
+}
+
+/**
+ * Path data with one absolute move per contour and relative segments after it,
+ * rounded to 0.1px on absolute positions (so error never accumulates). Relative
+ * numbers are short, which keeps outlined-text cards under the 50 KB budget.
+ */
+function compact(cmds: opentype.PathCommand[]): string {
+  let d = '';
+  let cx = 0, cy = 0;
+  for (const c of cmds) {
+    if (c.type === 'Z') { d += 'z'; continue; }
+    if (c.type === 'M') {
+      cx = r1(c.x); cy = r1(c.y);
+      d += 'M' + nums([cx, cy]);
+      continue;
+    }
+    const pts: number[] = [];
+    const rel = (x: number, y: number) => { pts.push(r1(r1(x) - cx), r1(r1(y) - cy)); };
+    if (c.type === 'Q') rel(c.x1, c.y1);
+    if (c.type === 'C') { rel(c.x1, c.y1); rel(c.x2, c.y2); }
+    rel(c.x, c.y);
+    d += c.type.toLowerCase() + nums(pts);
+    cx = r1(c.x); cy = r1(c.y);
+  }
+  return d;
 }
