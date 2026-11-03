@@ -52,12 +52,16 @@ export async function fetchStats(o: { token: string; login: string; now: Date; f
   if (!cal || typeof cal.totalContributions !== 'number' || !Array.isArray(cal.weeks)) {
     throw new Error('GitHub GraphQL response has no contributionCalendar');
   }
+  const repos = cc.totalRepositoriesWithContributedCommits;
+  if (typeof repos !== 'number') {
+    throw new Error('GitHub GraphQL response has no totalRepositoriesWithContributedCommits');
+  }
   const days: Day[] = cal.weeks.flatMap((w: any) =>
     w.contributionDays.map((d: any) => ({ date: d.date, count: d.contributionCount })),
   );
   return {
     contributions: cal.totalContributions,
     longestStreak: longestStreak(days),
-    repos: cc.totalRepositoriesWithContributedCommits ?? 0,
+    repos,
   };
 }

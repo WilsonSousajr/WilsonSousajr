@@ -99,3 +99,9 @@ test('renders five-digit figures within bounds', () => {
   for (const fig of ['12,345', '365', '120']) assert.ok(measure(fig, 28, 700) < col - 16, fig);
   assert.ok(svg.match(/<title>(.*?)<\/title>/)![1].includes('12,345 contributions'));
 });
+
+test('fetchStats: rejects when the repositories figure is missing (no silent 0)', async () => {
+  const body = payload([1, 1]);
+  delete (body.data.user.contributionsCollection as any).totalRepositoriesWithContributedCommits;
+  await assert.rejects(fetchStats({ token: 't', login: 'x', now: new Date(), fetch: stubFetch(200, body) }), /totalRepositoriesWithContributedCommits/);
+});
