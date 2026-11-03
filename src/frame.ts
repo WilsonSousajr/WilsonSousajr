@@ -6,7 +6,7 @@ import type { Theme } from './theme.ts';
 
 export const RADIUS = 20;
 /** Transparent side margin baked into every canvas: cards in a row sit 2×INSET apart,
- * and three 272-wide link canvases (280) add up to one 832-wide card's canvas (840). */
+ * and three link canvases always add up to one wide canvas (desktop 3×200 = 600, mobile 3×120 = 360). */
 export const INSET = 4;
 
 export function esc(s: string): string {
@@ -22,9 +22,13 @@ export interface FrameOptions {
   title: string;
   /** Inner SVG markup (paths) drawn on top of the card. */
   body: string;
+  /** Display size relative to the canvas (sets the width/height attributes the README shows). */
+  scale?: number;
 }
 
-export function frame({ width: w, height: h, theme: t, delayMs, title, body }: FrameOptions): string {
+export function frame({ width: w, height: h, theme: t, delayMs, title, body, scale = 1 }: FrameOptions): string {
+  const cw = w + INSET * 2;
+  const r1 = (n: number) => Math.round(n * 10) / 10;
   const id = `${t.name}-bg`;
   const style = `
 .card { animation: fade-up 600ms ease-out both; animation-delay: ${delayMs}ms; }
@@ -33,7 +37,7 @@ export function frame({ width: w, height: h, theme: t, delayMs, title, body }: F
 @keyframes sweep { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -100; } }
 @media (prefers-reduced-motion: reduce) { .card, .sweep { animation: none; } .sweep { opacity: 0; } }`;
   return [
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w + INSET * 2} ${h}" width="${w + INSET * 2}" height="${h}" role="img">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cw} ${h}" width="${r1(cw * scale)}" height="${r1(h * scale)}" role="img">`,
     `<title>${esc(title)}</title>`,
     `<style>${style}</style>`,
     `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">`,

@@ -94,9 +94,9 @@ test('--stats writes both stat cards on success', async () => {
 
 test('renders five-digit figures within bounds', () => {
   const svg = renderStats({ contributions: 12345, longestStreak: 365, repos: 120 }, DARK);
-  assert.ok(svg.includes('viewBox="0 0 840 150"'));
-  const col = (840 - 48) / 3;
-  for (const fig of ['12,345', '365', '120']) assert.ok(measure(fig, 28, 700) < col - 16, fig);
+  assert.ok(svg.includes('viewBox="0 0 600 116"'));
+  const col = (592 - 40) / 3;
+  for (const fig of ['12,345', '365', '120']) assert.ok(measure(fig, 24, 700) < col - 16, fig);
   assert.ok(svg.match(/<title>(.*?)<\/title>/)![1].includes('12,345 contributions'));
 });
 

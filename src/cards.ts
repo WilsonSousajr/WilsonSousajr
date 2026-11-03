@@ -5,7 +5,8 @@ import { PROFILE, STATS_META, type LinkCard } from './data.ts';
 import type { Stats } from './stats.ts';
 import type { Theme } from './theme.ts';
 
-const PAD = 24;
+/** Phone cards show at 336 wide (links 112): fits a 343px column (iPhone SE and up). */
+const MOBILE_SCALE = 336 / 360;
 
 /** Outline pill with centered text; returns markup and its width. */
 function pill(text: string, x: number, y: number, h: number, size: number, padX: number, t: Theme) {
@@ -20,21 +21,21 @@ function pill(text: string, x: number, y: number, h: number, size: number, padX:
 export type Variant = 'desktop' | 'mobile';
 
 /**
- * Desktop cards are drawn for an ~830px README column; mobile cards for a phone
- * column (~342px), so they render near 1:1 instead of shrinking to ~0.41.
- * Canvas = card + 2×INSET: desktop 840 / 280, mobile 360 / 120 (always 3 links = 1 wide).
+ * Images show at their own size (no % widths in the README). Desktop cards are
+ * 600 wide at 1:1; mobile cards (narrow viewports) are 360-wide canvases shown at 336.
+ * Canvas = card + 2×INSET: desktop 600 / 200, mobile 360 / 120 (always 3 links = 1 wide).
  */
 export function renderProfile(t: Theme, v: Variant = 'desktop'): string {
   const title = `${PROFILE.name}, ${PROFILE.pill}. ${PROFILE.tagline}. ${PROFILE.chips.join(', ')}.`;
   const parts: string[] = [];
   if (v === 'desktop') {
-    const W = 832, H = 190;
-    parts.push(pill(PROFILE.pill, PAD, PAD, 24, 11, 10, t).svg);
-    parts.push(textPath(PROFILE.name, { x: PAD, y: 88, size: 30, weight: 700, fill: t.primary }).svg);
-    parts.push(textPath(PROFILE.tagline, { x: PAD, y: 114, size: 14, weight: 400, fill: t.secondary }).svg);
-    let x = PAD;
+    const W = 592, H = 150, P = 20;
+    parts.push(pill(PROFILE.pill, P, P, 22, 10, 9, t).svg);
+    parts.push(textPath(PROFILE.name, { x: P, y: 76, size: 26, weight: 700, fill: t.primary }).svg);
+    parts.push(textPath(PROFILE.tagline, { x: P, y: 98, size: 13, weight: 400, fill: t.secondary }).svg);
+    let x = P;
     for (const chip of PROFILE.chips) {
-      const c = pill(chip, x, H - PAD - 22, 22, 10, 9, t);
+      const c = pill(chip, x, H - P - 20, 20, 10, 8, t);
       parts.push(c.svg);
       x += c.width + 6;
     }
@@ -55,7 +56,7 @@ export function renderProfile(t: Theme, v: Variant = 'desktop'): string {
     parts.push(c.svg);
     x += c.width + 6;
   }
-  return frame({ width: W, height: y + 20 + P, theme: t, delayMs: 0, title, body: parts.join('') });
+  return frame({ width: W, height: y + 20 + P, theme: t, delayMs: 0, title, body: parts.join(''), scale: MOBILE_SCALE });
 }
 
 /** Lucide ArrowUpRight in the top-right corner. */
@@ -67,12 +68,12 @@ function arrow(W: number, size: number, pad: number, t: Theme): string {
 export function renderLink(l: LinkCard, t: Theme, v: Variant = 'desktop'): string {
   const title = `${l.label}: ${l.title} (${l.sub})`;
   if (v === 'desktop') {
-    const W = 272, H = 150, P = 20;
+    const W = 192, H = 112, P = 16;
     const body = [
-      arrow(W, 16, 20, t),
-      textPath(l.label.toUpperCase(), { x: P, y: 80, size: 10, weight: 600, fill: t.muted, letterSpacing: 0.15 }).svg,
-      textPath(l.title, { x: P, y: 104, size: 18, weight: 600, fill: t.primary }).svg,
-      textPath(l.sub, { x: P, y: H - P - 4, size: 13, weight: 400, fill: t.secondary }).svg,
+      arrow(W, 14, P, t),
+      textPath(l.label.toUpperCase(), { x: P, y: 58, size: 9, weight: 600, fill: t.muted, letterSpacing: 0.12 }).svg,
+      textPath(l.title, { x: P, y: 78, size: 15, weight: 600, fill: t.primary }).svg,
+      textPath(l.sub, { x: P, y: H - P, size: 11, weight: 400, fill: t.secondary }).svg,
     ].join('');
     return frame({ width: W, height: H, theme: t, delayMs: l.delayMs, title, body });
   }
@@ -83,7 +84,7 @@ export function renderLink(l: LinkCard, t: Theme, v: Variant = 'desktop'): strin
     textPath(l.label.toUpperCase(), { x: P, y: 62, size: 9, weight: 600, fill: t.muted, letterSpacing: 0.12 }).svg,
     textPath(l.title, { x: P, y: 82, size: 13, weight: 600, fill: t.primary }).svg,
   ].join('');
-  return frame({ width: W, height: H, theme: t, delayMs: l.delayMs, title, body });
+  return frame({ width: W, height: H, theme: t, delayMs: l.delayMs, title, body, scale: MOBILE_SCALE });
 }
 
 export function renderStats(s: Stats, t: Theme, v: Variant = 'desktop'): string {
@@ -92,16 +93,16 @@ export function renderStats(s: Stats, t: Theme, v: Variant = 'desktop'): string 
     .map((f, i) => `${f} ${STATS_META.captions[i]}`)
     .join(', ')}`;
   const m = v === 'mobile';
-  const W = m ? 352 : 832, H = m ? 128 : 150, P = m ? 20 : PAD;
+  const W = m ? 352 : 592, H = m ? 128 : 116, P = 20;
   const captions = m ? STATS_META.mobileCaptions : STATS_META.captions;
   const col = (W - P * 2) / 3;
   const parts = [
-    textPath(STATS_META.label.toUpperCase(), { x: P, y: P + (m ? 9 : 10), size: m ? 9 : 10, weight: 600, fill: t.muted, letterSpacing: m ? 0.12 : 0.15 }).svg,
+    textPath(STATS_META.label.toUpperCase(), { x: P, y: P + 9, size: 9, weight: 600, fill: t.muted, letterSpacing: 0.12 }).svg,
   ];
   figures.forEach((fig, i) => {
     const x = P + i * col;
-    parts.push(textPath(fig, { x, y: m ? 80 : 92, size: m ? 24 : 28, weight: 700, fill: t.primary }).svg);
-    parts.push(textPath(captions[i], { x, y: m ? 100 : 118, size: m ? 11 : 12, weight: 400, fill: t.secondary }).svg);
+    parts.push(textPath(fig, { x, y: m ? 80 : 72, size: 24, weight: 700, fill: t.primary }).svg);
+    parts.push(textPath(captions[i], { x, y: m ? 100 : 92, size: 11, weight: 400, fill: t.secondary }).svg);
   });
-  return frame({ width: W, height: H, theme: t, delayMs: STATS_META.delayMs, title, body: parts.join('') });
+  return frame({ width: W, height: H, theme: t, delayMs: STATS_META.delayMs, title, body: parts.join(''), scale: m ? MOBILE_SCALE : 1 });
 }

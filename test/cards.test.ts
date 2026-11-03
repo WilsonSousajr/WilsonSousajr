@@ -11,7 +11,7 @@ import { writeStatic } from '../src/build.ts';
 for (const t of THEMES) {
   test(`${t.name}: profile card size, title and weight`, () => {
     const svg = renderProfile(t);
-    assert.ok(svg.includes('viewBox="0 0 840 190"'));
+    assert.ok(svg.includes('viewBox="0 0 600 150"'));
     const title = svg.match(/<title>(.*?)<\/title>/)![1];
     assert.ok(title.includes('Wilson Sousa') && title.includes('Full Stack Engineer'));
     assert.ok(Buffer.byteLength(svg) < 50_000, `${Buffer.byteLength(svg)} bytes`);
@@ -19,7 +19,7 @@ for (const t of THEMES) {
 
   test(`${t.name}: blog link card size, title and stagger`, () => {
     const svg = renderLink(LINKS[1], t);
-    assert.ok(svg.includes('viewBox="0 0 280 150"'));
+    assert.ok(svg.includes('viewBox="0 0 200 112"'));
     assert.ok(svg.match(/<title>(.*?)<\/title>/)![1].includes('Blog'));
     assert.ok(svg.includes('animation-delay: 240ms'));
   });
@@ -53,5 +53,12 @@ test('row alignment: three link canvases add up to exactly one wide canvas', () 
 test('every card is inset 4px inside its canvas, so neighbours sit 8px apart', () => {
   for (const svg of [renderProfile(THEMES[0]), renderLink(LINKS[0], THEMES[0])]) {
     assert.ok(svg.includes('<g transform="translate(4 0)">'), 'inset group');
+  }
+});
+
+test('desktop cards display 1:1 (width attr equals canvas) so text stays at its designed size', () => {
+  for (const svg of [renderProfile(THEMES[0]), renderLink(LINKS[0], THEMES[0])]) {
+    const vb = svg.match(/viewBox="0 0 (\d+) (\d+)"/)!;
+    assert.ok(svg.includes(`width="${vb[1]}" height="${vb[2]}"`));
   }
 });

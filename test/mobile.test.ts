@@ -49,3 +49,9 @@ test('writeStatic and writeStats also emit mobile variants', () => {
   }
   assert.equal(names.length, 20);
 });
+
+test('mobile cards display at 336 wide (links 112), fitting a 343px phone column', () => {
+  assert.ok(renderProfile(DARK, 'mobile').includes('width="336"'));
+  assert.ok(renderStats(STATS, DARK, 'mobile').includes('width="336"'));
+  assert.ok(renderLink(LINKS[0], DARK, 'mobile').includes('width="112"'));
+});

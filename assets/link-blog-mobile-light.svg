@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 96" width="120" height="96" role="img"><title>Blog: Read articles (Engineering notes)</title><style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 96" width="112" height="89.6" role="img"><title>Blog: Read articles (Engineering notes)</title><style>
 .card { animation: fade-up 600ms ease-out both; animation-delay: 240ms; }
 .sweep { stroke-dasharray: 12 88; animation: sweep 9s linear infinite; animation-delay: 840ms; }
 @keyframes fade-up { from { opacity: 0; transform: translateY(8px); } }
